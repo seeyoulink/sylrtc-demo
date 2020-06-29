@@ -1,0 +1,129 @@
+<!doctype html>
+<html class="no-js" lang="">
+<head>
+  <meta charset="utf-8">
+  <title>SeeYouLink VCP Quick Call</title>
+  <meta name="description" content="SeeYouLink VCP Demo">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="css/normalize.css">
+  <link rel="stylesheet" href="css/main.css">
+  <meta name="theme-color" content="#fafafa">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <script src="../client/v1/sylrtc-client.js"></script>
+</head>
+<body>
+<header>
+  <img src="https://seeyoulink.com/pages/wp-content/uploads/2019/10/seeyoulink_logo.svg" alt="SeeYouLink Logo" height="30">
+  <h1>SeeYouLink VCP Quick Call</h1>
+</header>
+<div id="status">
+
+</div>
+<div id="quick_call_links">
+  <h2>Hello!</h2>
+  <p id="info"><strong>You are invited by <span class="inviter"></span> to call him/her.</strong><br><br> <span id='validity_info'>This invitation link is valid till <span id="expiration_time"></span>.</span> <br><br><span id="inviter_name" class="inviter"> </span> <span id="inviter_status"></span></p>
+  <button id="quick_call" type="button">Call</button>
+
+</div>
+
+
+<script lang="javascript">
+var inviter_username;
+function connect(){
+  var url_string = location.href;
+  var url = new URL(url_string);
+  var quick_call_token = url.searchParams.get("quick_call_token");
+  console.log("quick_call_token="+quick_call_token);
+  $.get( "/api/quick_call_info/", {quick_call_token:quick_call_token}, function( data, status, xhr ) {
+    console.log(data);
+    if(data.error){
+      $('#info').html('Error: Invalid or expired token!');
+        $('#info').addClass('error');
+        $('#quick_call').attr("disabled","disabled");
+    } else {
+      var ui_mode = 'fullscreen';
+      var start_call_with_cam = true;
+      var single_incoming_call_only = false;
+      var username_prefix= "qc";
+      var user_id= quick_call_token.substr(quick_call_token.length - 7);
+      var inviter= data.data.user_full_name;
+      var client_id= data.data.client_id;
+      inviter_username= data.data.username;
+      var expiration_time= data.data.expiration_time;
+      var localtime= new Date(data.data.expiration_time).toString().split(" GMT")[0];
+      var invited_person_name= data.data.invited_person_name;
+      var room = data.data.room;
+      $('.inviter').html(inviter);
+      $('#quick_call').html('Call '+inviter);
+      $('#quick_call_links h2').html('Hello '+ invited_person_name+ '!');
+      $('#expiration_time').html(localtime);
+      if (data.message == 'success'){
+        var url_protocol = window.location.protocol;
+        var url_host = window.location.host;
+        var rtc_server = url_protocol + '//' + url_host;
+
+        sylrtc.init({ // configure sylrtc_client
+          //avatar_path: avatar_path, // optional, relative path to user avatar
+          room_name: room, // optional
+          ui_mode: ui_mode,
+          start_call_with_cam: start_call_with_cam,
+          rtc_server: rtc_server,
+          single_incoming_call_only: single_incoming_call_only,
+          user: {
+            username_prefix: username_prefix, // SYL 3rd party ID, e.g. yn or rs
+            id: user_id, // user id in your application
+            full_name: invited_person_name // full user name
+          },
+          credentials: { // please enter your given id and token
+            quick_call_token: quick_call_token,
+            inviter_client: client_id
+          }
+        });
+        $('#inviter_status').html('is currently not online. Please check back latter!');
+        $('#quick_call').removeAttr("disabled");
+        sylrtc.on('onlinepresencechanged', function(onlineUsers){
+          var is_inviter_online = false;
+          console.log(onlineUsers);
+          for(var i=0; i<onlineUsers.length; i++){
+            if(onlineUsers[i].username == inviter_username){
+              is_inviter_online = true;
+            }
+          }
+
+          if(is_inviter_online){
+            $('#inviter_status').html('is currently online, and you can place call by clicking the button bellow!');
+            $('#quick_call').removeAttr("disabled");
+          } else {
+            $('#inviter_status').html('is currently not online. Please check back latter!');
+            $('#quick_call').attr("disabled","disabled");
+          }
+
+        });
+
+        sylrtc.connect();
+
+      } else {
+        $('#validity_info').html('Invitation has expired. Please contact '+inviter+ '.');
+        $('#validity_info').addClass('error');
+        $('#inviter_status').html('');
+        $('#inviter_name').html('');
+        $('#quick_call').attr("disabled","disabled");
+
+      }
+
+    }
+  });
+
+
+}
+
+document.getElementById('quick_call').onclick = function(){
+  sylrtc.performCall(inviter_username);
+}
+
+connect();
+
+</script>
+</body>
+
+</html>
