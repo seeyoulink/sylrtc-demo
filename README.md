@@ -1,8 +1,12 @@
-# SeeYouLink RTC Demo
+# SeeYouLink VCP
+
+[Online Demo Page]()
+
+[Documentation]()
+
+[Website]()
 
 <br>
-
-### Introduction
 
 SeeYouLink Virtual Communications Platform (VCP) enables you to easily add collaboration and real-time communication features into your website, web application, or mobile app with a few lines of code in no-time.
 
