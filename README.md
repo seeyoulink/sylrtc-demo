@@ -36,10 +36,14 @@ Important notice: Only Chromium based Edge browsers are supported.
 <script src="https://cdn2.seeyoulink.com/client/v1/sylrtc-client.js"></script>
 ```
 
+<br>
+
 2. Load Material Icons. If your application is already using Google Fonts Material Icons, skip this.
 ```html
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 ```
+
+<br>
 
 3. When the document is ready, configure client, set presence listener and connect to SeeYouLink RTC signaling server.
 
@@ -58,8 +62,35 @@ sylrtc.init({
     client_token: '01234567890' // alternatively, auth_token can be use
   }
 });
- 
-sylrtc.on('onlinepresencechanged', function(onlineUsers){  
+
+// connect to rtc server
+sylrtc.connect();
+```
+
+<br>
+
+4. Setting up click-to-call handlers
+``` html
+<div data-username="rs-1234-Jim Doe" class="contact">Call Jim Doe</div>
+<div data-username="rs-5678-Jane Doe" class="contact">Call Jane Doe</div>
+```
+``` javascript
+$('.contact).on('click', () => {
+  const username = $(this).attr('data-username');
+  sylrtc.performCall(username);
+});
+```
+
+<br>
+
+5. Handle user online status
+``` html
+<div data-username="rs-1234-Jim Doe" class="contact online">Call Jim Doe</div>
+<div data-username="rs-5678-Jane Doe" class="contact">Call Jane Doe</div>
+```
+
+``` javascript
+sylrtc.on('onlinepresencechanged', (onlineUsers) => {
   // onlineUsers is an array of users that are currently online, e.g.
   // [{
   //   username: 'rs-1234-John Doe', 
@@ -67,11 +98,15 @@ sylrtc.on('onlinepresencechanged', function(onlineUsers){
   //   full_name: 'John Doe',
   //   avatar: '/_UserUploads/ProfileImg/1234'
   // }]
-  // See below an example of usage 
-});
+  
+  $('.contact').each((i, contact) => {
+    const online = $.grep(onlineUsers, (user) => {
+      return user.username == $(contact).attr('data-username');
+    })[0];
 
-// connect to rtc server
-sylrtc.connect();
+    $(contact).toggleClass('online', online);
+  });  
+});
 ```
 
 
