@@ -4,7 +4,7 @@
 
 [Documentation]()
 
-[Website]()
+[Website](https://seeyoulink.com/pages/vcp/)
 
 <br>
 
@@ -34,7 +34,7 @@ Important notice: Only Chromium based Edge browsers are supported.
 
 <br>
 
-### Quick start guide
+## Quick start guide
 1. Load the client library (doesn’t have to be loaded in head).
 ```html
 <script src="https://cdn2.seeyoulink.com/client/v1/sylrtc-client.js"></script>
