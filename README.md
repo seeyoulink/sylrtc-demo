@@ -26,4 +26,53 @@ To get started with SeeYouLink VCP, contact us via the form on [our website](htt
 | **macOS**    | ✓      | ✓               | ✓       | ✓      |
 | **Windows**  | ✓      | ✓               | ✓       | -      |
 
- Important notice: Only Chromium based Edge browsers are supported.
+Important notice: Only Chromium based Edge browsers are supported.
+
+<br>
+
+### Quick start guide
+1. Load the client library (doesn’t have to be loaded in head).
+```html
+<script src="https://cdn2.seeyoulink.com/client/v1/sylrtc-client.js"></script>
+```
+
+2. Load Material Icons. If your application is already using Google Fonts Material Icons, skip this.
+```html
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+```
+
+3. When the document is ready, configure client, set presence listener and connect to SeeYouLink RTC signaling server.
+
+```javascript
+// configure sylrtc_client, only required options set
+sylrtc.init({  
+   user: {
+     // required, user id in your application, or any other unique id
+    id: '0001', // integer or string
+    // required, full user name
+    full_name: 'Jon Doe'
+  },
+  // please enter your given id and token
+  credentials: {
+    client_id: 'acme',
+    client_token: '01234567890' // alternatively, auth_token can be use
+  }
+});
+ 
+sylrtc.on('onlinepresencechanged', function(onlineUsers){  
+  // onlineUsers is an array of users that are currently online, e.g.
+  // [{
+  //   username: 'rs-1234-John Doe', 
+  //   id: '1234',
+  //   full_name: 'John Doe',
+  //   avatar: '/_UserUploads/ProfileImg/1234'
+  // }]
+  // See below an example of usage 
+});
+
+// connect to rtc server
+sylrtc.connect();
+```
+
+
+
