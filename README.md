@@ -1,8 +1,8 @@
 # SeeYouLink VCP
 
-[Online Demo Page]()
+[Online Demo Page](https://rtc3.seeyoulink.com/demo/)
 
-[Documentation]()
+[Documentation](https://github.com/seeyoulink/sylrtc-demo/wiki/Basic-concepts-explained)
 
 [Website](https://seeyoulink.com/pages/vcp/)
 
@@ -30,7 +30,7 @@ To get started with SeeYouLink VCP, contact us via the form on [our website](htt
 | **macOS**    | ✓      | ✓               | ✓       | ✓      |
 | **Windows**  | ✓      | ✓               | ✓       | -      |
 
-Important notice: Only Chromium based Edge browsers are supported.
+Important notice: Only Chromium based Edge browsers are supported. Screen shareing only works in desktop browsers.
 
 <br>
 
