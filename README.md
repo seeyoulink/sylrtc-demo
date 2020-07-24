@@ -30,7 +30,7 @@ To get started with SeeYouLink VCP, contact us via the form on [our website](htt
 | **macOS**    | ✓      | ✓               | ✓       | ✓      |
 | **Windows**  | ✓      | ✓               | ✓       | -      |
 
-Important notice: Only Chromium based Edge browsers are supported. Screen shareing only works in desktop browsers. Screen sharing is supported only on desktop browsers (Windows, Linux, macOS)
+Important notice: Only Chromium based Edge browsers are supported. Screen sharing only works in desktop browsers (Windows, Linux, macOS).
 
 <br>
 
