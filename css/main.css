@@ -1,313 +1,452 @@
-/*! HTML5 Boilerplate v7.3.0 | MIT License | https://html5boilerplate.com/ */
+* {
+  box-sizing: border-box;
+}
 
-/* main.css 2.0.0 | MIT License | https://github.com/h5bp/main.css#readme */
-/*
- * What follows is the result of much research on cross-browser styling.
- * Credit left inline and big thanks to Nicolas Gallagher, Jonathan Neal,
- * Kroc Camen, and the H5BP dev community and team.
- */
+html {  
+  font-family: 'Roboto', sans-serif;
+  background-color: #f5f5f5;
+}
 
-/* ==========================================================================
-   Base styles: opinionated defaults
-   ========================================================================== */
+body {
+  padding-top: 100px;
+}
 
-html {
-  color: #222;
-  font-size: 1em;
-  line-height: 1.4;
+a {
+  text-decoration: none;
+  color: #5B7AEC;
+}
+
+.row {
+  width: 100%;
+  /* margin: 0 auto; */
+}
+
+.link-btn {
+  color: #5B7AEC;
+  cursor: pointer;
 }
 
 /*
- * Remove text-shadow in selection highlight:
- * https://twitter.com/miketaylr/status/12228805301
- *
- * Vendor-prefixed and regular ::selection selectors cannot be combined:
- * https://stackoverflow.com/a/16982510/7133471
- *
- * Customize the background color to match your design.
- */
+------------------------------------------------- 
+INFO
+-------------------------------------------------
+*/
 
-::-moz-selection {
-  background: #b3d4fc;
-  text-shadow: none;
+.syl-info {
+  width: 300px;
+  height: auto;  
+  border-radius: 15px;
+  box-shadow: 0 7px 20px rgba(0,0,0,0.2);
+  background-color: #FFF;
+  position: fixed;
+  top: 80px;
+  right: 10px;
+  overflow: hidden;
 }
 
-::selection {
-  background: #b3d4fc;
-  text-shadow: none;
+.syl-info .header {
+  display: flex;
+  align-items: center;
+  padding: 10px 15px;
+  border-bottom: 1px solid #ddd;
 }
 
-/*
- * A better looking default horizontal rule
- */
+.syl-info .header i {
+  margin-left: auto;
+  color: #5B7AEC;
+  cursor: pointer;
+}
 
-hr {
-  display: block;
-  height: 1px;
-  border: 0;
-  border-top: 1px solid #ccc;
-  margin: 1em 0;
+.syl-info .header .title {  
+  font-weight: 500;
+}
+
+.syl-info .empty {
+  padding: 20px 15px;
+  font-size: 16px;
+}
+
+.syl-info ul {
+  list-style: none;
+  margin: 0;
   padding: 0;
 }
 
-/*
- * Remove the gap between audio, canvas, iframes,
- * images, videos and the bottom of their containers:
- * https://github.com/h5bp/html5-boilerplate/issues/440
- */
+/* STATUS LIST */
 
-audio,
-canvas,
-iframe,
-img,
-svg,
-video {
-  vertical-align: middle;
+.syl-info .status-list {
+  padding: 20px;
 }
 
+.syl-info .status-list li {
+  padding: 7px 0px;
+}
+
+
+/* ONLINE USERS */
+
+.syl-info .users-list li {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  border-bottom: #f5f5f5;
+  cursor: pointer;
+}
+
+.syl-info .users-list li:hover {
+  background-color: #f5f5f5;
+}
+
+.syl-info .users-list li:last-child {
+  border-bottom: none;
+}
+
+.syl-info .users-list li .avatar {  
+  /* font-size: 30px; */
+  padding: 7px;
+  color: #999;
+  background-color: #DDD;
+  border-radius: 100px;
+  margin-right: 10px;
+}
+
+.syl-info .users-list li .name {
+  font-size: 18px;
+  padding-right: 20px;
+}
+
+.syl-info .users-list li .call-btn {
+  font-size: 20px;
+  margin-left: auto;  
+  color: #FFF;
+  background-color: #5B7AEC;
+  border-radius: 100px;
+  padding: 8px;  
+}
+
+
+
 /*
- * Remove default fieldset styles.
- */
+------------------------------------------------- 
+HEADER
+-------------------------------------------------
+*/
+
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: #FFF;
+  display: flex;
+  align-items: center;
+  height: 72px;  
+  padding: 0 20px;
+  box-shadow: 0 0 1px rgba(0,0,0,0.3);
+}
+
+header img {
+  display: none;
+  height: 25px;
+  margin-right: 20px;
+}
+
+header h1 {
+  font-weight: 500;
+  font-size: 25px;
+  margin: 0;
+  margin-top: 4px;  
+}
+
+.syl-status {
+  cursor: pointer;
+  display: inline-block;
+  margin-left: auto;
+  background-color: #ddd;
+  padding: 10px 17px;
+  border-radius: 100px;
+  color: #888;
+  display: flex;
+  align-items: center;
+}
+
+.syl-status .text {
+  padding-top: 2px;
+}
+
+.syl-status i {
+  display: none;
+  margin-left: 9px;
+}
+
+.syl-status.online {
+  background-color: #40ca71;
+  color: #FFF;
+}
+
+.syl-status.online i {
+  display: inline-block;
+}
+
+.syl-online-users {
+  background-color: #5B7AEC;
+  color: #FFF;
+  position: relative;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 100px;
+  margin-left: 20px;
+  cursor: pointer;
+}
+
+.syl-online-users i {
+  font-size: 30px;
+}
+
+.syl-online-users .counter {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  width: 25px;
+  height: 25px;
+  background-color: #f55;
+  font-size: 12px;  
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 100px;
+  border: 1px solid #FFF;
+}
+
+
+/*
+------------------------------------------------- 
+FOOTER
+-------------------------------------------------
+*/
+
+footer {
+  padding: 50px;
+}
+
+footer p {
+  font-size: 13px;
+  color: #888;
+  text-align: center;
+  margin: 0;  
+}
+
+footer p.copy {
+  font-size: 11px;
+  margin-top: 5px;
+}
+
+
+/*
+------------------------------------------------- 
+CARD
+-------------------------------------------------
+*/
+
+.syl-card {
+  width: 100%;
+  margin: 0 auto;
+  background-color: #FFF;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  margin-bottom: 40px;
+  overflow: hidden;
+}
+
+.syl-card h2 {
+  font-weight: 700;
+  font-size: 18px;
+  margin: 20px;
+  text-align: center;
+}
+
+
+/*
+------------------------------------------------- 
+BUTTON
+-------------------------------------------------
+*/
+
+button {
+  border: none;
+  box-shadow: none;
+  border-radius: 100px;
+  background-color: #5B7AEC;
+  color: #FFF;
+  font-size: 16px;
+  font-weight: 500;
+  padding: 12px;
+  outline: none;
+  cursor: pointer;  
+}
+
+button.red {
+  background-color: #f55;
+}
+
+button.green {
+  background-color: #40ca71;
+}
+
+button:disabled {
+  background-color: #DDD;
+}
+
+
+/*
+------------------------------------------------- 
+FORM
+-------------------------------------------------
+*/
+
+form {
+  border-bottom: 1px solid #ddd;
+}
+
+form.no-border {
+  border: none;
+}
 
 fieldset {
-  border: 0;
-  margin: 0;
-  padding: 0;
+  padding: 15px 20px;
+  border-top: 1px solid #ddd;
 }
 
-/*
- * Allow only vertical resizing of textareas.
- */
-
-textarea {
-  resize: vertical;
+.legend {
+  font-weight: 700;
+  margin-bottom: 10px;
 }
 
-/* ==========================================================================
-   Browser Upgrade Prompt
-   ========================================================================== */
-
-.browserupgrade {
-  margin: 0.2em 0;
-  background: #ccc;
-  color: #000;
-  padding: 0.2em 0;
+.legend span,
+label span {
+  font-weight: 400;
+  font-size: 14px;
+  color: #666;
 }
 
-/* ==========================================================================
-   Author's custom styles
-   ========================================================================== */
-
-/* ==========================================================================
-   Helper classes
-   ========================================================================== */
-
-/*
- * Hide visually and from screen readers
- */
-
-.hidden {
-  display: none !important;
-}
-
-/*
-* Hide only visually, but have it available for screen readers:
-* https://snook.ca/archives/html_and_css/hiding-content-for-accessibility
-*
-* 1. For long content, line feeds are not interpreted as spaces and small width
-*    causes content to wrap 1 word per line:
-*    https://medium.com/@jessebeach/beware-smushed-off-screen-accessible-text-5952a4c2cbfe
-*/
-
-.sr-only {
-  border: 0;
-  clip: rect(0, 0, 0, 0);
-  height: 1px;
-  margin: -1px;
-  overflow: hidden;
-  padding: 0;
-  position: absolute;
-  white-space: nowrap;
-  width: 1px;
-  /* 1 */
-}
-
-/*
-* Extends the .sr-only class to allow the element
-* to be focusable when navigated to via the keyboard:
-* https://www.drupal.org/node/897638
-*/
-
-.sr-only.focusable:active,
-.sr-only.focusable:focus {
-  clip: auto;
-  height: auto;
-  margin: 0;
-  overflow: visible;
-  position: static;
-  white-space: inherit;
-  width: auto;
-}
-
-/*
-* Hide visually and from screen readers, but maintain layout
-*/
-
-.invisible {
-  visibility: hidden;
-}
-
-/*
-* Clearfix: contain floats
-*
-* For modern browsers
-* 1. The space content is one way to avoid an Opera bug when the
-*    `contenteditable` attribute is included anywhere else in the document.
-*    Otherwise it causes space to appear at the top and bottom of elements
-*    that receive the `clearfix` class.
-* 2. The use of `table` rather than `block` is only necessary if using
-*    `:before` to contain the top-margins of child elements.
-*/
-
-.clearfix:before,
-.clearfix:after {
-  content: " ";
-  /* 1 */
-  display: table;
-  /* 2 */
-}
-
-.clearfix:after {
-  clear: both;
-}
-
-/* ==========================================================================
-   EXAMPLE Media Queries for Responsive Design.
-   These examples override the primary ('mobile first') styles.
-   Modify as content requires.
-   ========================================================================== */
-
-@media only screen and (min-width: 35em) {
-  /* Style adjustments for viewports that meet the condition */
-}
-
-@media print,
-  (-webkit-min-device-pixel-ratio: 1.25),
-  (min-resolution: 1.25dppx),
-  (min-resolution: 120dpi) {
-  /* Style adjustments for high resolution devices */
-}
-
-/* ==========================================================================
-   Print styles.
-   Inlined to avoid the additional HTTP request:
-   https://www.phpied.com/delay-loading-your-print-css/
-   ========================================================================== */
-
-@media print {
-  *,
-  *:before,
-  *:after {
-    background: transparent !important;
-    color: #000 !important;
-    /* Black prints faster */
-    box-shadow: none !important;
-    text-shadow: none !important;
-  }
-  a,
-  a:visited {
-    text-decoration: underline;
-  }
-  a[href]:after {
-    content: " (" attr(href) ")";
-  }
-  abbr[title]:after {
-    content: " (" attr(title) ")";
-  }
-  /*
-     * Don't show links that are fragment identifiers,
-     * or use the `javascript:` pseudo protocol
-     */
-  a[href^="#"]:after,
-  a[href^="javascript:"]:after {
-    content: "";
-  }
-  pre {
-    white-space: pre-wrap !important;
-  }
-  pre,
-  blockquote {
-    border: 1px solid #999;
-    page-break-inside: avoid;
-  }
-  /*
-     * Printing Tables:
-     * https://web.archive.org/web/20180815150934/http://css-discuss.incutio.com/wiki/Printing_Tables
-     */
-  thead {
-    display: table-header-group;
-  }
-  tr,
-  img {
-    page-break-inside: avoid;
-  }
-  p,
-  h2,
-  h3 {
-    orphans: 3;
-    widows: 3;
-  }
-  h2,
-  h3 {
-    page-break-after: avoid;
-  }
-}
-
-/* .row {
-  display: flex;
-}
-
-.column {
-  flex: 50%;
-} */
-
-html {
-  margin: 3em;
-  font-family: sans-serif;
-}
-
-form div {
-  margin-bottom: 1em;
-}
-
-form legend {
-  font-weight: bold;
-  margin-bottom: 0.5em;
-}
-
-form label{
-  display: inline-block;
-  width: 300px;
-}
-
-form button, #quick_call{
-  padding: 0.5em;
+.syl-card button {
   width: 200px;
-  cursor: pointer;
+  margin: 25px auto;
+  display: block;
 }
 
-#room_participants_list ul{
-  list-style-type: none;
-  font-size: 1.2em;
-  cursor: pointer;
+form fieldset > div,
+form fieldset section > div {
+  padding: 5px 0;  
 }
 
-span.status {
-  height: 50px;
-  max-width: 500px;
+form label {
+  width: 300px;
+  display: inline-block;
+}
+
+form input {
+  width: 100%;
+  padding: 6px 10px;
+  border: none;
+  background-color: #ececec;
+  border-radius: 50px;
+  outline: none;
+  border: 1px solid #DDD;
+}
+
+form input.error {
+  background-color: #ffe5e5;
+  border-color: #f55;
+}
+
+form input:focus {
+  border: 1px solid #5B7AEC;
+  background-color: #FFF;
+}
+
+#apply_changes {
+  display: none;
+}
+
+.response-box {
+  padding: 20px;
+}
+
+.res-info {
+  margin-bottom: 10px;
+  font-size: 16px;
+  color: #444;
+}
+
+.res-label {
+  margin-bottom: 5px;
+  font-size: 14px;
+  color: #666;
+}
+
+.res-link {
   word-break: break-all;
+  padding: 7px;
+  background-color: #f5f5f5;
+  border-radius: 5px;
+  color: #757575;  
 }
 
-.error {
-  color: red;
+#quick_call_links {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+#quick_call_links .quick_call_info_box {
+  padding: 20px;
+  border-top: 1px solid #DDD;
+  border-bottom: 1px solid #DDD;
+}
+
+
+/*
+------------------------------------------------- 
+MEDIA QUERIES
+-------------------------------------------------
+*/
+
+@media only screen and (min-width: 600px) {
+  header img {
+    display: inline-block;
+  }
+
+  .row {
+    width: 600px;
+    margin: 0 auto;
+  }
+  
+  form input {
+    width: 240px;
+  }
+}
+
+
+@media only screen and (min-width: 1280px) {
+  .row-box {
+    width: 1280px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: row-reverse;
+  }
+
+  .row {
+    margin: 0;
+    padding: 10px;
+    width: 50%;
+  }
+
+  .syl-card {
+    margin: 0;
+    margin-bottom: 20px;
+  }
 }

@@ -9,277 +9,150 @@
   <link rel="stylesheet" href="css/main.css">
   <meta name="theme-color" content="#fafafa">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,500,700">
+  <!-- <script src="https://rtc3.seeyoulink.com/client/v1/sylrtc-client.js"></script> -->
   <script src="../client/v1/sylrtc-client.js"></script>
 </head>
 <body>
-<header>
-  <img src="https://seeyoulink.com/pages/wp-content/uploads/2019/10/seeyoulink_logo.svg" alt="SeeYouLink Logo" height="30">
-  <h1>SeeYouLink VCP Demo</h1>
-</header>
-<div class="row">
-<div class="column" id="generate_auth_token">
-  <h2>Get auth token</h2>
-  <form>
-    <div>
-      <label for="client_id_1">Client ID</label>
-      <input id="client_id_1" type="text" />
+  <header>
+    <img src="https://seeyoulink.com/pages/wp-content/uploads/2019/10/seeyoulink_logo.svg" alt="SeeYouLink Logo" height="30">
+    <h1>VCP Demo</h1>
+    <div class="syl-status">
+      <span id="header_status" class="text">Disconnected</span>
+      <i class="material-icons">info_outline</i>
     </div>
-    <div>
-      <label for="client_token_1">Client token</label>
-      <input id="client_token_1" type="text" />
-    </div>
-    <button id="generate_token" type="button">Generate token</button><br><br>
-    <span class="status" id="genrated_auth_token"></span>
-  </form>
-</div>
-<div class="column" id="config_and_connect">
-  <h2>Configure and connect to RTC server</h2>
-  <form>
-    <fieldset id="general_confifg">
-      <legend>General Configuration</legend>
-      <div>
-        <label for="language">Language ("en" or "sr_Latn")</label>
-        <input id="language" type="text" placeholder="en" />
-      </div>
-      <div>
-        <label for="ui_mode">UI mode ("minimized" or "fullscreen")</label>
-        <input id="ui_mode" type="text" placeholder="minimized" />
-      </div>
-      <div>
-        <label for="ui_size">UI size ("normal" or "large")</label>
-        <input id="ui_size" type="text" placeholder="normal" />
-      </div>
-      <div>
-        <label for="show_buttons_label">Show buttons label (true/false)</label>
-        <input id="show_buttons_label" type="text" placeholder="false" />
-      </div>
-      <div>
-        <label for="start_call_with_cam">Start call with cam (true/false)</label>
-        <input id="start_call_with_cam" type="text" placeholder="true" />
-      </div>
-      <div>
-        <label for="single_incoming_call_only">Single incomming call only (true/false)</label>
-        <input id="single_incoming_call_only" type="text" placeholder="false" />
-      </div>
-      <div>
-        <label for="room_name">Room name (optional)</label>
-        <input id="room_name" type="text" />
-      </div>
-      <div>
-    </fieldset>
-    <fieldset id="user_confifg">
-      <legend>User</legend>
-      <div>
-        <label for="username_prefix">Username prefix (optional)</label>
-        <input id="username_prefix" type="text" />
-      </div>
-      <div>
-        <label for="user_id">User ID</label>
-        <input id="user_id" type="text" />
-      </div>
-      <div>
-        <label for="full_name">User full name</label>
-        <input id="full_name" type="text" />
-      </div>
-    </fieldset>
-    <fieldset id="auth">
-      <legend>Authentication (use client OR auth token)</legend>
-      <div>
-        <label for="client_id">Client ID</label>
-        <input id="client_id" type="text" />
-      </div>
-      <div>
-        <label for="client_token">Client token</label>
-        <input id="client_token" type="text" />
-      </div>
-      <div>
-        <label for="auth_token">Auth token</label>
-        <input id="auth_token" type="text" />
-      </div>
-    </fieldset>
-    <button id="connect" type="button">Connect</button><br><br>
-    <span class="status" id="connection_status"></span>
-  </form>
-</div>
-</div>
-<div class="row">
-<div class="column" id="quick_call_links">
-  <h2>Quick call links</h2>
-  <form>
-  <div>
-    <label for="invited_person_name">Invited persons name</label>
-    <input id="invited_person_name" type="text" />
+
+    <div class="syl-online-users">
+      <i class="material-icons">people</i>
+      <span class="counter">0</span>
+    </div>    
+  </header>
+
+<div class="row-box">
+  <div class="row"> 
+    <div class="syl-card" id="config_and_connect">
+      <h2>Configure and connect</h2>
+      <form>
+        <fieldset>
+          <div class="legend">User and room</div>          
+          <div>
+            <label for="user_id">User ID</label>
+            <input id="user_id" type="text" />
+          </div>
+          <div>
+            <label for="full_name">User full name</label>
+            <input id="full_name" type="text" />
+          </div>
+          <div>
+            <label for="username_prefix">Username prefix <span>(optional)</span></label>
+            <input id="username_prefix" type="text" />
+          </div>
+          <div>
+            <label for="room_name">Room name <span>(optional)</span></label>
+            <input id="room_name" type="text" />
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <div class="legend">Authentication <span>(use client OR auth token)</span></div>
+          <div id="demo_account" class="link-btn">Use demo account</div>
+
+          <section id="auth_fields">
+            <div>
+              <label for="client_id">Client ID</label>
+              <input id="client_id" type="text" />
+            </div>
+            <div>
+              <label for="client_token">Client token</label>
+              <input id="client_token" type="text" />
+            </div>
+            <div>
+              <label for="auth_token">Auth token</label>
+              <input id="auth_token" type="text" />
+            </div>
+          </section>
+        </fieldset>        
+      </form>
+
+      <button id="connect" type="button" class="green">Connect</button>
+    </div>    
   </div>
-    <button id="quick_call" type="button">Create quick call link</button><br><br>
-    <span class="status" id="quick_call_link"></span>
-  </form>
+
+  <div class="row">
+    <div class="syl-card" id="customize">
+      <h2>Customize</h2>
+      <form class="no-border">
+        <fieldset>                    
+          <div>
+            <label for="language">Language <span>("en" or "sr_Latn")</span></label>
+            <input id="language" type="text" placeholder="en" />
+          </div>
+          <div>
+            <label for="ui_mode">UI mode <span>("minimized" or "fullscreen")</span></label>
+            <input id="ui_mode" type="text" placeholder="minimized" />
+          </div>
+          <div>
+            <label for="ui_size">UI size <span>("normal" or "large")</span></label>
+            <input id="ui_size" type="text" placeholder="normal" />
+          </div>
+          <div>
+            <label for="show_buttons_label">Show buttons label <span>(true/false)</span></label>
+            <input id="show_buttons_label" type="text" placeholder="false" />
+          </div>
+          <div>
+            <label for="start_call_with_cam">Start call with cam <span>(true/false)</span></label>
+            <input id="start_call_with_cam" type="text" placeholder="true" />
+          </div>
+          <div>
+            <label for="single_incoming_call_only">Single incomming call only <span>(true/false)</span></label>
+            <input id="single_incoming_call_only" type="text" placeholder="false" />
+          </div>                   
+        </fieldset>        
+      </form>
+
+      <button id="apply_changes" type="button">Apply changes</button>      
+    </div>
+
+    <div class="syl-card" id="generate_auth_token">
+      <h2>Get auth token</h2>
+      <form>
+        <fieldset>
+          <div>
+            <label for="client_id_1">Client ID</label>
+            <input id="client_id_1" type="text" />
+          </div>
+          <div>
+            <label for="client_token_1">Client token</label>
+            <input id="client_token_1" type="text" />
+          </div>
+        </fieldset>        
+      </form>
+
+      <button id="generate_token" type="button">Generate token</button>      
+    </div>
+
+    <div class="syl-card" id="quick_call_links">
+      <h2>Quick call links</h2>
+      <form>
+        <fieldset>
+          <div>
+            <label for="invited_person_name">Invited persons name</label>
+            <input id="invited_person_name" type="text" />
+          </div>
+        </fieldset>        
+      </form>
+
+      <button id="quick_call" type="button">Create quick call link</button>      
+    </div>
+  </div>
+
 </div>
 
-<div class="column" id="room_participants_list">
-  <h2>List of users in the room (click to call)</h2>
-  <ul >
-  </ul>
-</div>
-</div>
+  <footer>
+    <p>SeeYouLink, Inc. 3773 HOWARD HUGHES PKWY STE 500S, Las Vegas NV 89169, (707) 780-9657 main, <a href="mailto:info@seeyoulink.com">info@seeyoulink.com</a></p>
+    <p class="copy">Copyright 2020 © SeeYouLink, Inc. All rights Reserved.</p>
+  </footer>
 
-<script lang="javascript">
-
-var url_protocol = window.location.protocol;
-var url_host = window.location.host;
-var rtc_server = url_protocol + '//' + url_host;
-
-sylrtc.init({});
-
-function config(){
-  var ui_mode = document.getElementById('ui_mode').value;
-  var start_call_with_cam = document.getElementById('start_call_with_cam').value;
-  if(start_call_with_cam == "true"){
-    start_call_with_cam = true;
-  } else if (start_call_with_cam == "false"){
-    start_call_with_cam = false;
-  } else {
-    start_call_with_cam = true;
-  }
-  var single_incoming_call_only = document.getElementById('single_incoming_call_only').value;
-  if(single_incoming_call_only == "false"){
-    single_incoming_call_only = false;
-  } else if (single_incoming_call_only == "true"){
-    single_incoming_call_only = true;
-  } else {
-    single_incoming_call_only = false;
-  }
-  var show_buttons_label = document.getElementById('show_buttons_label').value;
-  if(show_buttons_label == "true"){
-    show_buttons_label = true;
-  } else if (show_buttons_label == "false"){
-    show_buttons_label = false;
-  } else {
-    show_buttons_label = false;
-  }
-  var language= document.getElementById('language').value;
-  var ui_size= document.getElementById('ui_size').value;
-  var room_name= document.getElementById('room_name').value;
-  var username_prefix= document.getElementById('username_prefix').value;
-  var user_id= document.getElementById('user_id').value;
-  var full_name= document.getElementById('full_name').value;
-  var client_id= document.getElementById('client_id').value;
-  var client_token= document.getElementById('client_token').value;
-  var auth_token= document.getElementById('auth_token').value;
-
-  var credentials;
-  if(auth_token!=""){
-    credentials= {
-      client_id: client_id,
-      auth_token: auth_token
-    }
-  } else {
-    credentials= {
-      client_id: client_id,
-      client_token: client_token
-    }
-  }
-  console.log(credentials);
-
-  sylrtc.configure({
-    room_name: room_name,
-    ui_size: ui_size,
-    language: language,
-    show_buttons_label: show_buttons_label,
-    ui_mode: ui_mode,
-    start_call_with_cam: start_call_with_cam,
-    single_incoming_call_only: single_incoming_call_only,
-    rtc_server: rtc_server,
-    user: {
-      username_prefix: username_prefix,
-      id: user_id,
-      full_name: full_name
-    },
-    credentials: credentials
-  });
-
-  sylrtc.on('onlinepresencechanged', function(onlineUsers){
-    console.log(onlineUsers);
-    $('#room_participants_list ul').html("");
-    var room_participants_list = "";
-    for(var i=0; i< onlineUsers.length; i++){
-      var user= onlineUsers[i];
-      var user_li= "<li id='"+ user.username+ "'>"+ user.full_name+ "</li>";
-      room_participants_list+= user_li;
-    }
-    $('#room_participants_list ul').html(room_participants_list);
-  });
-}
-
-document.getElementById('generate_token').onclick = function(){
-  $('#genrated_auth_token').removeClass('error');
-  $('#genrated_auth_token').html('');
-  var client_id= document.getElementById('client_id_1').value;
-  var client_token= document.getElementById('client_token_1').value;
-  $.post( "/api/auth/", { client_id: client_id, client_token: client_token}, function( data, status, xhr ) {
-    console.log(data);
-
-    if(data.error){
-      $('#genrated_auth_token').addClass('error');
-      $('#genrated_auth_token').html('Error generating token: '+ data.error);
-    } else {
-      $('#genrated_auth_token').html('Here\'s your auth token: <br><br>'+ data.data.auth_token);//+ ' <br><br>It will expire at '+ data.data.expiration_time+ '.'
-    }
-  });
-}
-
-document.getElementById('connect').onclick = function(){
-  config();
-  $('#connection_status').removeClass('error');
-  $('#connection_status').html('');
-  if (easyrtc.myEasyrtcid) {
-    sylrtc.disconnect();
-    $('#connect').html('Connect');
-  } else {
-    sylrtc.connect().then((function(res){
-        console.log(res);
-        $('#connect').html('Disconnect');
-        $('#connection_status').removeClass('error');
-        $('#connection_status').html('Successfully connected! <br><br>You are online now, and your calling username is '+easyrtc.username +' and your temporary calling ID is '+ easyrtc.myEasyrtcid);
-    })).catch((function(errCode){
-        $('#connection_status').html(errCode);
-        $('#connection_status').addClass('error');
-    }));
-  }
-}
-
-document.getElementById('quick_call').onclick = function(){
-  $('#quick_call_link').removeClass('error');
-  $('#quick_call_link').html('');
-  var client_id= document.getElementById('client_id').value;
-  var auth_token= document.getElementById('auth_token').value;
-  var client_token= document.getElementById('client_token').value;
-  var username_prefix= document.getElementById('username_prefix').value;
-  var user_id= document.getElementById('user_id').value;
-  var user_full_name= document.getElementById('full_name').value;
-  var username = username_prefix+ '-'+ user_id+ '-'+ user_full_name;
-  var invited_person_name = document.getElementById('invited_person_name').value;
-  var room= document.getElementById('room_name').value;
-  var avatar = "";
-  $.get( "/api/quick_calling/", { client_id: client_id, client_token: client_token, username:username,  user_full_name:user_full_name, avatar:avatar, invited_person_name: invited_person_name, room:room}, function( data, status, xhr ) {
-    console.log(data);
-    if(data.error){
-      $('#quick_call_link').html('Error: '+data.error+ '<br><br>Please check Client ID and Client token above, and try again!');
-      $('#quick_call_link').addClass('error');
-    } else {
-      var localtime= new Date(data.data.expiration_time).toString().split(" GMT")[0];
-      var link= rtc_server+ '/demo/calling.html?quick_call_token='+ data.data.quick_call_token;
-      $('#quick_call_link').html('Here\'s your link: <br><br>'+ link+ ' <br><br>It will expire at '+ localtime+ '.');
-    }
-});
-}
-
-$('#room_participants_list ul').on('click', 'li', function(){
-  var username= $(this).attr('id');
-  console.log('Call '+ username);
-  sylrtc.performCall(username);
-});
-
-</script>
+  <script src="./index.js"></script>
 </body>
-
 </html>
