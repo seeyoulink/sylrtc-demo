@@ -42,14 +42,8 @@ Important notice: Only Chromium based Edge browsers are supported. Screen sharin
 
 <br>
 
-2. Load Material Icons. If your application is already using Google Fonts Material Icons, skip this.
-```html
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-```
 
-<br>
-
-3. When the document is ready, configure client, set presence listener and connect to SeeYouLink RTC signaling server.
+2. When the document is ready, configure client, set presence listener and connect to SeeYouLink RTC signaling server.
 
 ```javascript
 // configure sylrtc_client, only required options set
@@ -73,7 +67,7 @@ sylrtc.connect();
 
 <br>
 
-4. Setting up click-to-call handlers
+3. Setting up click-to-call handlers
 ``` html
 <div data-username="rs-1234-Jim Doe" class="contact">Call Jim Doe</div>
 <div data-username="rs-5678-Jane Doe" class="contact">Call Jane Doe</div>
@@ -87,7 +81,7 @@ $('.contact).on('click', () => {
 
 <br>
 
-5. Handle user online status
+4. Handle user online status
 ``` html
 <div data-username="rs-1234-Jim Doe" class="contact online">Call Jim Doe</div>
 <div data-username="rs-5678-Jane Doe" class="contact">Call Jane Doe</div>
