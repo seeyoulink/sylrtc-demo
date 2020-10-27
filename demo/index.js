@@ -157,6 +157,10 @@ function updateOnlineStatus(onOff){
 // Clicks
 // ----------------------------------------------
 
+$('.card-title-box').on('click', function(){
+  $(this).parent().toggleClass('info-expanded');
+});
+
 $('#connect').on('click', function(){
   if (easyrtc.myEasyrtcid) {
     sylrtc.disconnect().then(function(){      
@@ -359,20 +363,74 @@ $('#quick_call').on('click', function(){
     
     } else {
       var localtime = new Date(data.data.expiration_time).toString().split(' GMT')[0];
-      var link = rtc_server+ '/demo/calling.html?quick_call_token='+ data.data.quick_call_token;
-      $('#quick_call_link').html('Here\'s your link: <br><br>'+ link+ ' <br><br>It will expire at '+ localtime+ '.');
+      var link = rtc_server + '/demo/calling.html?quick_call_token=' + data.data.quick_call_token;      
 
-      var token_html = '' +
-      '<div id="quick_link_box" class="response-box">' +
-        '<div class="res-info">You successfully created quick call link. Copy and paste it in another browser or another tab in current browser.</div>' + 
-        '<div class="res-label">Quick call link (expires at '+ localtime +'):</div>' +
-        '<div class="res-link" id="auth_token_value">'+ link +'</div>' +
+      var link_html = '' +
+      '<div class="quick-link-box">' +
+        '<div class="label">Quick call link for '+ invited_person_name + ',</div>' +
+        '<div class="expiration">expires at '+ localtime +'.</div>' +
+        '<a class="link" href="'+ link +'" target="_blank">'+ link +'</a>' +
       '</div>';
+      
+      $('#quick_call_links').append(link_html);
 
-      $('#quick_call').remove();
-      $('#quick_call_links').append(token_html);
+      $('#invited_person_name').val('');
     }
   });
+});
+
+
+$('#media_message_btn').on('click', function(){
+  if (!sylrtc.connected) {
+    sylrtc.notify({
+      icon: 'warning',
+      icon_color: 'red',
+      message: 'You are not connected. Please coonect first and try again.',
+      autohide: true
+    });
+
+    return;
+  }
+  
+  var recipient_name = $('#recipient_name').val();
+
+  if (recipient_name === '') {
+    recipient_name = 'Test ' + Math.floor(100000 + Math.random() * 900000);
+    $('#recipient_name').val(recipient_name);
+  }
+  
+  sylrtc.recorder.open({
+    full_name: recipient_name
+  });
+
+  $('#recipient_name').val('');
+});
+
+
+$('#screencast_btn').on('click', function(){
+  if (!sylrtc.connected) {
+    sylrtc.notify({
+      icon: 'warning',
+      icon_color: 'red',
+      message: 'You are not connected. Please coonect first and try again.',
+      autohide: true
+    });
+
+    return;
+  }
+  
+  var title = $('#screencast_title').val();
+
+  if (title === '') {
+    title = 'Screencast ' + Math.floor(100000 + Math.random() * 900000);
+    $('#screencast_title').val(title);
+  }
+  
+  sylrtc.recorder.createScreencast({
+    title: title
+  });
+
+  $('#screencast_title').val('');
 });
 
 
@@ -424,6 +482,54 @@ $online_users_btn.on('click', function(){
   openInfo({ name:  'users_' + online });
 });
 
+// ----------------------------------------------
+// Phone calling
+// ----------------------------------------------
+
+function initPhoneCalling(){
+  $.ajax({
+    url: "https://sdk.twilio.com/js/client/releases/1.10.1/twilio.min.js",
+    dataType: "script",
+    success: function(){
+      console.log('Twilio client loaded...');
+      $.get('/api/callout_token/', {
+        client_id: $('#client_id').val(),
+        client_token: $('#client_token').val()
+      }, function(data, status, xhr) {
+        console.log(data);
+        if (data.error) {
+          console.log('# Twilio : ERROR : Error getting call out token!');
+        } else {
+          console.log('# Twilio : Token obtained!'); 
+          Twilio.Device.setup(data.token, {
+            enableRingingState: false
+          });
+    
+          Twilio.Device.ready(function (device) {
+            console.log('# Twilio : Device : READY');
+          });
+        
+          Twilio.Device.error(function (error) {
+            console.log("# Twilio : ERROR : " + error.message);
+          });
+        }
+      });
+    }
+  });
+  
+
+  
+};
+
+function callPhoneNumber(number){
+  var connection = Twilio.Device.connect({'phoneNumber': number});
+      console.log('# Twilio : Device : connect');
+};
+
+function hangupPhone(){
+  Twilio.Device.disconnectAll();
+  console.log('# Twilio : Device : Hangup');
+};
 
 // ----------------------------------------------
 // SYLRTC
@@ -540,7 +646,12 @@ function config(){
       id: user_id,
       full_name: full_name
     },
-    credentials: credentials
+    credentials: credentials,
+    //using i18n keys you can override any UI copy from sylrtc-client/app/langs/en.js language file
+    i18n: {
+      processing_message: 'Processing your message, please wait...',
+      message_uploaded: 'Your message is ready, here is the message link that you can send to the message recipient.'
+    }
   });
   
   return true;
@@ -567,6 +678,11 @@ sylrtc.on('connected', function(_onlineUsers){
 
 sylrtc.on('disconnected', function(_onlineUsers){
   console.log('DISCONNECTED');
+});
+
+
+sylrtc.on('chatmessage', function(data){
+  console.log('CHATMESSAGE', data.message, data.user);
 });
 
 

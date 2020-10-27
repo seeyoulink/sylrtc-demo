@@ -397,15 +397,78 @@ form input:focus {
   color: #757575;  
 }
 
-#quick_call_links {
+.quick-link-box {
+  padding: 10px;
+  border: 1px solid #DDD;
+  border-radius: 7px;
+  margin: 10px;
+}
+
+.quick-link-box .expiration {
+  margin-bottom: 7px;
+}
+
+.quick-link-box .link {
+  text-decoration: none;
+  word-break: break-all;
+  color: #5B7AEC;
+}
+
+#quick_call_card {
   max-width: 600px;
   margin: 0 auto;
 }
 
-#quick_call_links .quick_call_info_box {
+#quick_call_card p {
+  font-size: 17px;
+  margin: 20px;
+  text-align: center;
+}
+
+.card-info {
+  font-size: 16px;
   padding: 20px;
-  border-top: 1px solid #DDD;
-  border-bottom: 1px solid #DDD;
+  text-align: left;
+  border-top: 1px solid #ddd;
+  margin-top: 0;
+  display: none;
+}
+
+.card-title-box {
+  display: flex;
+  align-items: center;
+  cursor: pointer;  
+}
+
+.card-title-box .title {
+  text-align: left;
+  margin-right: auto;  
+}
+
+.card-title-box .info-icon {
+  font-size: 28px;
+  color: #5B7AEC;
+  padding: 18px;  
+}
+
+.syl-card.info-expanded .card-info {
+  display: block;
+}
+
+.syl-card .info-icon.active {
+  display: none;
+}
+
+.syl-card.info-expanded .info-icon.active {
+  display: inline-block;
+}
+
+.syl-card .info-icon.inactive {
+  display: inline-block;
+}
+
+.syl-card.info-expanded .info-icon.inactive {
+  display: none;
 }
 
 

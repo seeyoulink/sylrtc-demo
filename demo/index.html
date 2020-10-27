@@ -7,10 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="css/normalize.css">
   <link rel="stylesheet" href="css/main.css">
-  <meta name="theme-color" content="#fafafa">
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,500,700">
-  <!-- <script src="https://rtc3.seeyoulink.com/client/v1/sylrtc-client.js"></script> -->
+  <meta name="theme-color" content="#fafafa">  
   <script src="../client/v1/sylrtc-client.js"></script>
 </head>
 <body>
@@ -30,8 +27,15 @@
 
 <div class="row-box">
   <div class="row"> 
-    <div class="syl-card" id="config_and_connect">
-      <h2>Configure and connect</h2>
+    <div class="syl-card" id="config_and_connect">      
+      <div class="card-title-box">
+        <h2 class="title">Configure and connect</h2>
+        <i class="info-icon active material-icons">info</i>
+        <i class="info-icon inactive material-icons">info_outline</i>
+      </div>
+
+      <p class="card-info">To connect to the server, you need to specify at least User ID, User full name, Client ID, and client or auth token. If you do not have your Client ID yet, you can contact us at info@seeyoulink.com to obtain one, or you can use the demo account instead. </p>
+
       <form>
         <fieldset>
           <div class="legend">User and room</div>          
@@ -79,8 +83,15 @@
   </div>
 
   <div class="row">
-    <div class="syl-card" id="customize">
-      <h2>Customize</h2>
+    <div class="syl-card" id="customize">      
+      <div class="card-title-box">
+        <h2 class="title">Customize</h2>
+        <i class="info-icon active material-icons">info</i>
+        <i class="info-icon inactive material-icons">info_outline</i>
+      </div>
+
+      <p class="card-info">By changing the parameters below, you can customize some of our user interface aspects.</p>
+
       <form class="no-border">
         <fieldset>                    
           <div>
@@ -113,8 +124,15 @@
       <button id="apply_changes" type="button">Apply changes</button>      
     </div>
 
-    <div class="syl-card" id="generate_auth_token">
-      <h2>Get auth token</h2>
+    <div class="syl-card" id="generate_auth_token">      
+      <div class="card-title-box">
+        <h2 class="title">Get auth token</h2>
+        <i class="info-icon active material-icons">info</i>
+        <i class="info-icon inactive material-icons">info_outline</i>
+      </div>
+      
+      <p class="card-info">The preferred authentication method to our communication server is by using the Client ID and Auth token. Auth token is a temporary access token that should be obtained on your backend and used in client-side code to avoid potential exposure of your client token. To generate Auto token, fill in the fields below and click "Generate token."</p>
+
       <form>
         <fieldset>
           <div>
@@ -131,8 +149,15 @@
       <button id="generate_token" type="button">Generate token</button>      
     </div>
 
-    <div class="syl-card" id="quick_call_links">
-      <h2>Quick call links</h2>
+    <div class="syl-card" id="quick_call_links">      
+      <div class="card-title-box">
+        <h2 class="title">Quick call links</h2>
+        <i class="info-icon active material-icons">info</i>
+        <i class="info-icon inactive material-icons">info_outline</i>
+      </div>      
+
+      <p class="card-info">Quick call links are a way to quickly and conveniently get on the call with somebody without requiring the other party to create accounts or enter passwords. By default, they are valid for 24 hours.</p>
+
       <form>
         <fieldset>
           <div>
@@ -143,6 +168,48 @@
       </form>
 
       <button id="quick_call" type="button">Create quick call link</button>      
+    </div>
+
+    <div class="syl-card" id="media_message">
+      <div class="card-title-box">
+        <h2 class="title">Record & Upload Media Message</h2>
+        <i class="info-icon active material-icons">info</i>
+        <i class="info-icon inactive material-icons">info_outline</i>
+      </div>      
+
+      <p class="card-info">You can record and upload audio or video message to the server and get the access link to the message. This is typically used to send a message to somebody when you tried calling them, and they are not online at the moment.</p>
+
+      <form>
+        <fieldset>
+          <div>
+            <label for="recipient_name">Recipient name</label>
+            <input id="recipient_name" type="text" />
+          </div>
+        </fieldset>        
+      </form>
+
+      <button id="media_message_btn" type="button">Create media message</button>      
+    </div>
+
+    <div class="syl-card" id="screencast">
+      <div class="card-title-box">
+        <h2 class="title">Record & Upload Screencast</h2>
+        <i class="info-icon active material-icons">info</i>
+        <i class="info-icon inactive material-icons">info_outline</i>
+      </div>      
+
+      <p class="card-info">You can record and upload screencast to server and get access link to the video file.</p>
+
+      <form>
+        <fieldset>
+          <div>
+            <label for="screencast_title">Title</label>
+            <input id="screencast_title" type="text" />
+          </div>
+        </fieldset>        
+      </form>
+
+      <button id="screencast_btn" type="button">Create screencast</button>      
     </div>
   </div>
 

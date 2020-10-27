@@ -7,8 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="css/normalize.css">
   <link rel="stylesheet" href="css/main.css">
-  <meta name="theme-color" content="#fafafa">
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <meta name="theme-color" content="#fafafa">  
   <script src="../client/v1/sylrtc-client.js"></script>
 </head>
 <body>
@@ -22,7 +21,7 @@
 
 
   
-<div class="syl-card" id="quick_call_links">  
+<div class="syl-card" id="quick_call_card">  
   <h2>Hello!</h2>
   <div class="quick_call_info_box">
     <p id="info"><strong>You are invited by <span class="inviter"></span> to call him/her.</strong><br><br> <span id='validity_info'>This invitation link is valid till <span id="expiration_time"></span>.</span> <br><br><span id="inviter_name" class="inviter"> </span> <span id="inviter_status"></span></p>
@@ -61,7 +60,7 @@ function connect(){
       var room = data.data.room;
       $('.inviter').html(inviter);
       $('#quick_call').html('Call '+inviter);
-      $('#quick_call_links h2').html('Hello '+ invited_person_name+ '!');
+      $('#quick_call_card h2').html('Hello '+ invited_person_name+ '!');
       $('#expiration_time').html(localtime);
       if (data.message == 'success'){
         var url_protocol = window.location.protocol;
