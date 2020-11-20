@@ -28,11 +28,11 @@ function infoTemplate(params){
     var text = '';
 
     if (params.name === 'status_disconnected') {
-      text = 'You are not connected. Please configure and connect first.';      
+      text = 'You are not connected. Please set the required fields and connect first.';      
     }
 
     if (params.name === 'users_empty') {
-      text = 'There are no online users yet.'
+      text = 'There are no online users in your room.'
     }
 
     body = '<div class="empty">' + text + '</div>';
@@ -152,7 +152,6 @@ function updateOnlineStatus(onOff){
 }
 
 
-
 // ----------------------------------------------
 // Clicks
 // ----------------------------------------------
@@ -160,6 +159,7 @@ function updateOnlineStatus(onOff){
 $('.card-title-box').on('click', function(){
   $(this).parent().toggleClass('info-expanded');
 });
+
 
 $('#connect').on('click', function(){
   if (easyrtc.myEasyrtcid) {
@@ -173,7 +173,8 @@ $('#connect').on('click', function(){
     if (!configured) { return false; }
 
     sylrtc.connect().then(function(){      
-      updateOnlineStatus(true);      
+      updateOnlineStatus(true);
+      saveCredentialsInLS();
 
     }).catch(function(error){
       console.log('EEERRRRRROOOORRRRR', error.code, error.message);
@@ -182,7 +183,7 @@ $('#connect').on('click', function(){
       sylrtc.notify({
         icon: 'warning',
         icon_color: 'red',
-        message: 'Error connecting on rtc server. Error code: ' + error.code + '. Error message: ' + error.message,
+        message: 'Error connecting to the rtc server. Error code: ' + error.code + '. Error message: ' + error.message,
         autohide: true
       });
     });
@@ -202,7 +203,7 @@ $('#apply_changes').on('click', function(){
       sylrtc.notify({
         icon: 'warning',
         icon_color: 'red',
-        message: 'Error changing settings. Please check your configuration fields and try again.',
+        message: 'Error changing settings. Please check your configuration field values and try again.',
         autohide: true
       });
 
@@ -213,7 +214,7 @@ $('#apply_changes').on('click', function(){
       sylrtc.notify({
         icon: 'refresh',
         icon_color: 'green',
-        message: 'You successfully updated customization settings',
+        message: 'You have successfully updated settings',
         autohide: true
       });
     }).catch(function(errCode){
@@ -222,7 +223,7 @@ $('#apply_changes').on('click', function(){
       sylrtc.notify({
         icon: 'warning',
         icon_color: 'red',
-        message: 'Error connecting on rtc server. Error code: ' + errCode,
+        message: 'Error connecting to the rtc server. Error code: ' + errCode,
         autohide: true
       });
     });
@@ -272,7 +273,7 @@ $('#generate_token').on('click', function(){
     } else {
       var token_html = '' +
       '<div id="auth_token_box" class="response-box">' +
-        '<div class="res-info">You successfully generated auth token. Your Auth token and Client ID are copied to Authentication fields.</div>' + 
+        '<div class="res-info">You have successfully generated the auth token. Your Auth token and Client ID are copied to the Authentication fields.</div>' + 
         '<div class="res-label">Auth token:</div>' +
         '<div class="res-link" id="auth_token_value">'+ data.data.auth_token +'</div>' +
       '</div>';
@@ -299,7 +300,7 @@ $('#quick_call').on('click', function(){
     sylrtc.notify({
       icon: 'warning',
       icon_color: 'red',
-      message: 'You are not connected. Please coonect first and try again.',
+      message: 'You are not connected. Please connect and try again.',
       autohide: true
     });
 
@@ -357,7 +358,7 @@ $('#quick_call').on('click', function(){
       sylrtc.notify({
         icon: 'warning',
         icon_color: 'red',
-        message: 'Error: '+ data.error + '. Please check Client ID and Client token in Authentication section and try again.',
+        message: 'Error: '+ data.error + '. Please check Client ID and Client token in the authentication section and try again.',
         autohide: true
       });      
     
@@ -412,7 +413,7 @@ $('#screencast_btn').on('click', function(){
     sylrtc.notify({
       icon: 'warning',
       icon_color: 'red',
-      message: 'You are not connected. Please coonect first and try again.',
+      message: 'You are not connected. Please connect, and try again.',
       autohide: true
     });
 
@@ -466,6 +467,73 @@ $('.link-btn').on('click', function(){
 });
 
 
+$('#confroom_btn').on('click', function(){
+  if (sylrtc.connected) {
+    if (sylrtc.config.credentials.client_id === 'syldemo') {
+      sylrtc.notify({
+        icon: 'warning',
+        icon_color: 'red',
+        message: 'You can\'t create conference room with the demo account. Contact us in order to get a valid account.',
+        autohide: true
+      });
+    } else {
+      sylrtc.confRoom.open();
+    }
+  } else {
+    sylrtc.notify({
+      icon: 'warning',
+      icon_color: 'red',
+      message: 'You have to be connected in order to create the conference room',
+      autohide: true
+    });
+  }
+});
+
+
+$('#call_phone_number_btn').on('click', function(){
+  if (sylrtc.config.credentials.client_id === 'syldemo') {
+    sylrtc.notify({
+      icon: 'warning',
+      icon_color: 'red',
+      message: 'You can\'t call phone numbers with the demo account. Contact us in order to get a valid account.',
+      autohide: true
+    });
+  } else if (!sylrtc.connected) {
+    sylrtc.notify({
+      icon: 'warning',
+      icon_color: 'red',
+      message: 'You need to be connected in order to call phone.',
+      autohide: true
+    });
+
+  } else {
+    sylrtc.phoneCall.open();
+  } 
+});
+
+
+$('#send_sms_btn').on('click', function(){
+  if (sylrtc.config.credentials.client_id === 'syldemo') {
+    sylrtc.notify({
+      icon: 'warning',
+      icon_color: 'red',
+      message: 'You can\'t send sms messages with the demo account. Contact us in order to get a valid account.',
+      autohide: true
+    });
+  } else if (!sylrtc.connected) {
+    sylrtc.notify({
+      icon: 'warning',
+      icon_color: 'red',
+      message: 'You need to be connected in order to send sms message.',
+      autohide: true
+    });    
+  
+  } else {
+    sylrtc.sms.open();
+  }
+});
+
+
 $('form input').on('change', function(){  
   $(this).toggleClass('error', false);
 });
@@ -482,54 +550,7 @@ $online_users_btn.on('click', function(){
   openInfo({ name:  'users_' + online });
 });
 
-// ----------------------------------------------
-// Phone calling
-// ----------------------------------------------
 
-function initPhoneCalling(){
-  $.ajax({
-    url: "https://sdk.twilio.com/js/client/releases/1.10.1/twilio.min.js",
-    dataType: "script",
-    success: function(){
-      console.log('Twilio client loaded...');
-      $.get('/api/callout_token/', {
-        client_id: $('#client_id').val(),
-        client_token: $('#client_token').val()
-      }, function(data, status, xhr) {
-        console.log(data);
-        if (data.error) {
-          console.log('# Twilio : ERROR : Error getting call out token!');
-        } else {
-          console.log('# Twilio : Token obtained!'); 
-          Twilio.Device.setup(data.token, {
-            enableRingingState: false
-          });
-    
-          Twilio.Device.ready(function (device) {
-            console.log('# Twilio : Device : READY');
-          });
-        
-          Twilio.Device.error(function (error) {
-            console.log("# Twilio : ERROR : " + error.message);
-          });
-        }
-      });
-    }
-  });
-  
-
-  
-};
-
-function callPhoneNumber(number){
-  var connection = Twilio.Device.connect({'phoneNumber': number});
-      console.log('# Twilio : Device : connect');
-};
-
-function hangupPhone(){
-  Twilio.Device.disconnectAll();
-  console.log('# Twilio : Device : Hangup');
-};
 
 // ----------------------------------------------
 // SYLRTC
@@ -687,3 +708,27 @@ sylrtc.on('chatmessage', function(data){
 
 
 sylrtc.init({});
+
+function saveCredentialsInLS(){
+  localStorage.setItem('user_id', $('#user_id').val());
+  localStorage.setItem('user_full_name', $('#full_name').val());
+  localStorage.setItem('client_id', $('#client_id').val());
+  localStorage.setItem('client_token', $('#client_token').val());
+}
+
+
+function tryCredentialsFromLS(){
+  var user_id = localStorage.getItem('user_id');
+  if (user_id) { $('#user_id').val(user_id); }
+
+  var user_full_name = localStorage.getItem('user_full_name');
+  if (user_full_name) { $('#full_name').val(user_full_name); }
+
+  var client_id = localStorage.getItem('client_id');
+  if (client_id) { $('#client_id').val(client_id); }
+
+  var client_token = localStorage.getItem('client_token');
+  if (client_token) { $('#client_token').val(client_token); }
+}
+
+tryCredentialsFromLS();

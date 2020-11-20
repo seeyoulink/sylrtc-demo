@@ -2,8 +2,8 @@
 <html class="no-js" lang="">
 <head>
   <meta charset="utf-8">
-  <title>SeeYouLink VCP Demo</title>
-  <meta name="description" content="SeeYouLink VCP Demo">
+  <title>Talaria Demo</title>
+  <meta name="description" content="Talaria Demo">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="css/normalize.css">
   <link rel="stylesheet" href="css/main.css">
@@ -12,8 +12,8 @@
 </head>
 <body>
   <header>
-    <img src="https://seeyoulink.com/pages/wp-content/uploads/2019/10/seeyoulink_logo.svg" alt="SeeYouLink Logo" height="30">
-    <h1>VCP Demo</h1>
+    <img src="./talaria_logo.svg" alt="Talaria Logo" height="42">
+    <h1>Demo</h1>
     <div class="syl-status">
       <span id="header_status" class="text">Disconnected</span>
       <i class="material-icons">info_outline</i>
@@ -34,7 +34,7 @@
         <i class="info-icon inactive material-icons">info_outline</i>
       </div>
 
-      <p class="card-info">To connect to the server, you need to specify at least User ID, User full name, Client ID, and client or auth token. If you do not have your Client ID yet, you can contact us at info@seeyoulink.com to obtain one, or you can use the demo account instead. </p>
+      <p class="card-info">To connect to the server, you need to specify at least User ID, User full name, Client ID, and client or auth token. If you do not have your Client ID yet, you can contact us at info@talaria.solutions to obtain one, or you can use the demo account instead. </p>
 
       <form>
         <fieldset>
@@ -59,7 +59,7 @@
 
         <fieldset>
           <div class="legend">Authentication <span>(use client OR auth token)</span></div>
-          <div id="demo_account" class="link-btn">Use demo account</div>
+          <div id="demo_account" class="link-btn">Use the demo account</div>
 
           <section id="auth_fields">
             <div>
@@ -68,7 +68,7 @@
             </div>
             <div>
               <label for="client_token">Client token</label>
-              <input id="client_token" type="text" />
+              <input id="client_token" type="password" />
             </div>
             <div>
               <label for="auth_token">Auth token</label>
@@ -90,7 +90,7 @@
         <i class="info-icon inactive material-icons">info_outline</i>
       </div>
 
-      <p class="card-info">By changing the parameters below, you can customize some of our user interface aspects.</p>
+      <p class="card-info">By changing the parameters below, you can customize some of the user interface aspects. <sup>*</sup>Please note that the UI size "large" parameter is applied only if the UI mode is set to "fullscreen".</p>
 
       <form class="no-border">
         <fieldset>                    
@@ -103,7 +103,8 @@
             <input id="ui_mode" type="text" placeholder="minimized" />
           </div>
           <div>
-            <label for="ui_size">UI size <span>("normal" or "large")</span></label>
+            <label for="ui_size">UI size <span>("normal" or "large")<sup>*</sup></span></label>
+            
             <input id="ui_size" type="text" placeholder="normal" />
           </div>
           <div>
@@ -131,7 +132,7 @@
         <i class="info-icon inactive material-icons">info_outline</i>
       </div>
       
-      <p class="card-info">The preferred authentication method to our communication server is by using the Client ID and Auth token. Auth token is a temporary access token that should be obtained on your backend and used in client-side code to avoid potential exposure of your client token. To generate Auto token, fill in the fields below and click "Generate token."</p>
+      <p class="card-info">The preferred authentication method to our communication server is by using the Client ID and Auth token. Auth token is a temporary access token that should be obtained on your backend and used in client-side code to avoid potential exposure of your client token. To generate the auth_token, fill in the fields below and click "Generate token."</p>
 
       <form>
         <fieldset>
@@ -141,7 +142,7 @@
           </div>
           <div>
             <label for="client_token_1">Client token</label>
-            <input id="client_token_1" type="text" />
+            <input id="client_token_1" type="password" />
           </div>
         </fieldset>        
       </form>
@@ -177,7 +178,7 @@
         <i class="info-icon inactive material-icons">info_outline</i>
       </div>      
 
-      <p class="card-info">You can record and upload audio or video message to the server and get the access link to the message. This is typically used to send a message to somebody when you tried calling them, and they are not online at the moment.</p>
+      <p class="card-info">You can record and upload audio or video message to the server and get the access link to the message. Maximum message legth is 1 minute. This is typically used to send a message to somebody when you tried calling them, and they are not online at the moment.</p>
 
       <form>
         <fieldset>
@@ -198,7 +199,7 @@
         <i class="info-icon inactive material-icons">info_outline</i>
       </div>      
 
-      <p class="card-info">You can record and upload screencast to server and get access link to the video file.</p>
+      <p class="card-info">You can record and upload screencast (with or without audio) to server and get access link to the video file.  Maximum screencast legth is 1 minute. </p>
 
       <form>
         <fieldset>
@@ -211,15 +212,51 @@
 
       <button id="screencast_btn" type="button">Create screencast</button>      
     </div>
-  </div>
 
+    <div class="syl-card info-expanded" id="confroom">
+      <div class="card-title-box">
+        <h2 class="title">Conference Room</h2>
+        <i class="info-icon active material-icons">info</i>
+        <i class="info-icon inactive material-icons">info_outline</i>
+      </div>      
+
+      <p class="card-info">You can create a conference room and get the link which you can share with up to 50 participants.</p>      
+
+      <button id="confroom_btn" type="button">Create room</button>      
+    </div>
+
+    <div class="syl-card info-expanded" id="call_phone_number">
+      <div class="card-title-box">
+        <h2 class="title">Call phone number</h2>
+        <i class="info-icon active material-icons">info</i>
+        <i class="info-icon inactive material-icons">info_outline</i>
+      </div>      
+
+      <p class="card-info">For the phone number, please use the international format, starting with the + sign.</p>      
+
+      <button id="call_phone_number_btn" type="button">Call phone number</button>      
+    </div>
+
+    <div class="syl-card info-expanded" id="send_sms">
+      <div class="card-title-box">
+        <h2 class="title">Send SMS</h2>
+        <i class="info-icon active material-icons">info</i>
+        <i class="info-icon inactive material-icons">info_outline</i>
+      </div>      
+
+      <p class="card-info">For the phone number, please use the international format, starting with the + sign. Maximum message length is 160 characters.</p>      
+
+      <button id="send_sms_btn" type="button">Send SMS message</button>      
+    </div>
+  </div>
 </div>
 
-  <footer>
-    <p>SeeYouLink, Inc. 3773 HOWARD HUGHES PKWY STE 500S, Las Vegas NV 89169, (707) 780-9657 main, <a href="mailto:info@seeyoulink.com">info@seeyoulink.com</a></p>
-    <p class="copy">Copyright 2020 © SeeYouLink, Inc. All rights Reserved.</p>
-  </footer>
+<footer>
+  <p><strong>Talaria is a brand owned by SeeYouLink, Inc. </strong></p>
+  <p>SeeYouLink, Inc. 3773 HOWARD HUGHES PKWY STE 500S, Las Vegas NV 89169, (707) 780-9657 main, <a href="mailto:info@talaria.solutions">info@talaria.solutions</a></p>
+  <p class="copy">Copyright 2020 © SeeYouLink, Inc. All rights Reserved.</p>
+</footer>
 
-  <script src="./index.js"></script>
+<script src="./index.js"></script>
 </body>
 </html>
