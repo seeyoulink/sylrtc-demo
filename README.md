@@ -1,10 +1,10 @@
 # Talaria
 
-[Online Demo Page](https://rtc3.seeyoulink.com/demo/)
+[Online Demo Page](https://rtc.talaria.soultions/demo/)
 
 [Documentation](https://github.com/seeyoulink/sylrtc-demo/wiki/Basic-concepts-explained)
 
-[Website](https://seeyoulink.com/pages/vcp/)
+[Website](https://talaria.solutions/)
 
 <br>
 
@@ -37,7 +37,7 @@ Important notice: Only Chromium based Edge browsers are supported. Screen sharin
 ## Quick start guide
 1. Load the client library (doesn’t have to be loaded in head).
 ```html
-<script src="https://cdn2.seeyoulink.com/client/v1/sylrtc-client.js"></script>
+<script src="https://cdn.talaria.solutions/client/v1/sylrtc-client.js"></script>
 ```
 
 <br>
