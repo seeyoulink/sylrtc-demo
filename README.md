@@ -1,6 +1,6 @@
 # Talaria
 
-[Online Demo Page](https://rtc.talaria.soultions/demo/)
+[Online Demo Page](https://rtc.talaria.solutions/demo/)
 
 [Documentation](https://github.com/seeyoulink/sylrtc-demo/wiki/Basic-concepts-explained)
 
