@@ -13,7 +13,7 @@ body {
 
 a {
   text-decoration: none;
-  color: #5e35b1;
+  color: #7e57c2;
 }
 
 .row {
@@ -22,7 +22,7 @@ a {
 }
 
 .link-btn {
-  color: #5e35b1;
+  color: #7e57c2;
   cursor: pointer;
 }
 
@@ -59,7 +59,7 @@ INFO
 
 .syl-info .header i {
   margin-left: auto;
-  color: #5e35b1;
+  color: #7e57c2;
   cursor: pointer;
 }
 
@@ -125,7 +125,7 @@ INFO
   font-size: 20px;
   margin-left: auto;  
   color: #FFF;
-  background-color: #5e35b1;
+  background-color: #7e57c2;
   border-radius: 100px;
   padding: 8px;  
 }
@@ -194,7 +194,7 @@ header h1 {
 }
 
 .syl-online-users {
-  background-color: #5e35b1;
+  background-color: #7e57c2;
   color: #FFF;
   position: relative;
   width: 50px;
@@ -286,7 +286,7 @@ button {
   border: none;
   box-shadow: none;
   border-radius: 100px;
-  background-color: #5e35b1;
+  background-color: #7e57c2;
   color: #FFF;
   font-size: 16px;
   font-weight: 500;
@@ -371,7 +371,7 @@ form input.error {
 }
 
 form input:focus {
-  border: 1px solid #5e35b1;
+  border: 1px solid #7e57c2;
   background-color: #FFF;
 }
 
@@ -417,7 +417,7 @@ form input:focus {
 .quick-link-box .link {
   text-decoration: none;
   word-break: break-all;
-  color: #5e35b1;
+  color: #7e57c2;
 }
 
 #quick_call_card {
@@ -453,7 +453,7 @@ form input:focus {
 
 .card-title-box .info-icon {
   font-size: 28px;
-  color: #5e35b1;
+  color: #7e57c2;
   padding: 18px;  
 }
 
