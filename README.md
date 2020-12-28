@@ -24,8 +24,8 @@ To get started with Talaria, contact us via the form on [our website](https://ta
 
 |              | Chrome | Edge (Chromium) | Firefox | Safari |
 |--------------|:------:|:---------------:|:-------:|:------:|
-| **Android**  | ✓      | -               | -       | ✓      |
-| **iOS**      | -      | -               | -       | -      |
+| **Android**  | ✓      | -               | -       | -      |
+| **iOS**      | -      | -               | -       | ✓      |
 | **Linux**    | ✓      | -               | ✓       | -      |
 | **macOS**    | ✓      | ✓               | ✓       | ✓      |
 | **Windows**  | ✓      | ✓               | ✓       | -      |
