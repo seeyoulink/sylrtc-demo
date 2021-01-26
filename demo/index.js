@@ -2,6 +2,8 @@ var url_protocol = window.location.protocol;
 var url_host = window.location.host;
 var rtc_server = url_protocol + '//' + url_host;
 
+// var rtc_server = 'https://rtc2.seeyoulink.com'
+
 var onlineUsers = null;
 
 // ----------------------------------------------
@@ -381,6 +383,21 @@ $('#quick_call').on('click', function(){
 });
 
 
+$('#open_quick_links_list').on('click', function(){
+  if (!sylrtc.connected) {
+    sylrtc.notify({
+      icon: 'warning',
+      icon_color: 'red',
+      message: 'You need to be connected in order to view quick links.',
+      autohide: true
+    });    
+  
+  } else {
+    sylrtc.quickLinks.open();
+  }
+});
+
+
 $('#media_message_btn').on('click', function(){
   if (!sylrtc.connected) {
     sylrtc.notify({
@@ -490,6 +507,21 @@ $('#confroom_btn').on('click', function(){
 });
 
 
+$('#open_confrooms_list').on('click', function(){
+  if (!sylrtc.connected) {
+    sylrtc.notify({
+      icon: 'warning',
+      icon_color: 'red',
+      message: 'You need to be connected in order to view list of conference rooms.',
+      autohide: true
+    });    
+  
+  } else {
+    sylrtc.confRoom.openList();
+  }
+});
+
+
 $('#call_phone_number_btn').on('click', function(){
   if (sylrtc.config.credentials.client_id === 'syldemo') {
     sylrtc.notify({
@@ -550,6 +582,20 @@ $online_users_btn.on('click', function(){
   openInfo({ name:  'users_' + online });
 });
 
+
+$('#open_av_messages').on('click', function(){
+  if (!sylrtc.connected) {
+    sylrtc.notify({
+      icon: 'warning',
+      icon_color: 'red',
+      message: 'You need to be connected in order to view your messages.',
+      autohide: true
+    });    
+  
+  } else {
+    sylrtc.AVMessages.open();
+  }
+});
 
 
 // ----------------------------------------------
