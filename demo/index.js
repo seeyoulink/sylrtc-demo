@@ -58,7 +58,8 @@ function infoTemplate(params){
       '<li data-username="'+ user.username +'">' +
         '<i class="material-icons avatar">person</i>' +
         '<span class="name">'+ user.full_name +'</span>' +
-        '<i class="material-icons call-btn">call</i>' +
+        '<i class="material-icons action call-btn">call</i>' +
+        '<i class="material-icons action chat-btn">chat</i>' +
       '</li>';
     });
 
@@ -77,9 +78,16 @@ function infoTemplate(params){
   $('body').append(html);
 
   if (params.name === 'users_online') {
-    $('.syl-info li').on('click', function(){
-      var username = $(this).attr('data-username');
-      sylrtc.performCall(username);
+    $('.syl-info li').on('click', '.material-icons', function(){
+      var username = $(this).parent().attr('data-username');      
+
+      if ($(this).hasClass('call-btn')) {
+        sylrtc.performCall(username);
+
+      } else {
+        // OPEN CHAT        
+        sylrtc.chat.open([sylrtc.config.user.username, username]);
+      }      
     });
   }
 
@@ -165,9 +173,7 @@ $('.card-title-box').on('click', function(){
 
 $('#connect').on('click', function(){
   if (easyrtc.myEasyrtcid) {
-    sylrtc.disconnect().then(function(){      
-      updateOnlineStatus(false);
-    });    
+    sylrtc.disconnect();
   
   } else {
     var configured = config();   
@@ -175,11 +181,10 @@ $('#connect').on('click', function(){
     if (!configured) { return false; }
 
     sylrtc.connect().then(function(){      
-      updateOnlineStatus(true);
       saveCredentialsInLS();
 
     }).catch(function(error){
-      console.log('EEERRRRRROOOORRRRR', error.code, error.message);
+      console.log('Connect : ERROR : ', error.code, error.message);
       updateOnlineStatus(false);
 
       sylrtc.notify({
@@ -310,8 +315,8 @@ $('#quick_call').on('click', function(){
   }   
 
   var client_id = $('#client_id').val();
-  var auth_token = $('#auth_token').val();
   var client_token = $('#client_token').val();
+  var auth_token = $('#auth_token').val();
   var username_prefix = $('#username_prefix').val();
   var user_id = $('#user_id').val();
   var user_full_name = $('#full_name').val();
@@ -374,6 +379,8 @@ $('#quick_call').on('click', function(){
         '<div class="expiration">expires at '+ localtime +'.</div>' +
         '<a class="link" href="'+ link +'" target="_blank">'+ link +'</a>' +
       '</div>';
+
+      copyTextToClipboard(link);
       
       $('#quick_call_links').append(link_html);
 
@@ -718,8 +725,12 @@ function config(){
     i18n: {
       processing_message: 'Processing your message, please wait...',
       message_uploaded: 'Your message is ready, here is the message link that you can send to the message recipient.'
-    }
+    },
+    preserve_chat_conversations_in_local_storage: false,
+    chat_message_getter: getChatMessages
   });
+
+  sylrtc
   
   return true;
 }
@@ -739,21 +750,63 @@ sylrtc.on('onlinepresencechanged', function(_onlineUsers){
 
 
 sylrtc.on('connected', function(_onlineUsers){
-  console.log('CONNECTED');
+  updateOnlineStatus(true);
 });
 
 
 sylrtc.on('disconnected', function(_onlineUsers){
-  console.log('DISCONNECTED');
+  updateOnlineStatus(false);
 });
 
 
-sylrtc.on('chatmessage', function(data){
-  console.log('CHATMESSAGE', data.message, data.user);
+sylrtc.on('chatmessage', function(message){
+  message.participants = message.participants.join();
+
+  if (message.file) {
+    message.file = JSON.stringify(message.file);
+  }
+
+  let data = {
+    client_id: $('#client_id').val(),
+    client_token: $('#client_token').val(),
+    message: message
+  };  
+
+  $.ajax({
+    type: 'POST',
+    url: '/api/save_chat_message/',
+    contentType: 'application/json; charset=utf-8',
+    data: JSON.stringify(data),    
+    success: function(res){
+      console.log(res);
+    }
+  });
 });
+
+
+function getChatMessages(participants){  
+  return new Promise(function(resolve, reject){
+    var data = {
+      client_id: $('#client_id').val(),
+      client_token: $('#client_token').val(),
+      participants: participants.join()
+    };
+  
+    $.get( "/api/get_chat_conversation/", data, function(data) {      
+      var messages = data.data.map(function(msg){
+        msg.participants = msg.participants.split(',');
+        if (msg.file) { msg.file = JSON.parse(msg.file); }
+        return msg;
+      });
+      resolve(messages);
+    });
+  });
+}
+
 
 
 sylrtc.init({});
+
 
 function saveCredentialsInLS(){
   localStorage.setItem('user_id', $('#user_id').val());
@@ -779,3 +832,11 @@ function tryCredentialsFromLS(){
 
 tryCredentialsFromLS();
 
+async function copyTextToClipboard(text) {
+  try {
+    await navigator.clipboard.writeText(text);
+    console.log('Text copied to clipboard');
+  } catch(err) {
+    console.log('Error in copying text: ', err);
+  }
+}

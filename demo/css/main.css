@@ -121,14 +121,18 @@ INFO
   padding-right: 20px;
 }
 
-.syl-info .users-list li .call-btn {
+.syl-info .users-list li .action {
   font-size: 20px;
-  margin-left: auto;  
+  margin-left: 10px;  
   color: #FFF;
   background-color: #7e57c2;
   border-radius: 100px;
   padding: 8px;  
 }
+
+.syl-info .users-list li .call-btn {
+  margin-left: auto;
+} 
 
 
 
